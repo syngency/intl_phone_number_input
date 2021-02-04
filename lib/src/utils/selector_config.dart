@@ -24,6 +24,9 @@ class SelectorConfig {
       'backgroundColor would be remove in v0.7.0 and would be replaced with Theme.of(context).canvasColor. After giving it much though I decided to go ahead with this because DROPDOWN and DIALOG uses Theme.of(context).canvasColor as their backgroundColor respectively')
   final Color backgroundColor;
 
+  final Color textColor;
+  final Color secondaryTextColor;
+
   /// [countryComparator], sort the country list according to the comparator.
   ///
   /// Sorting is disabled by default
@@ -39,5 +42,7 @@ class SelectorConfig {
     this.backgroundColor,
     this.countryComparator,
     this.setSelectorButtonAsPrefixIcon = false,
+    this.textColor = Colors.black,
+    this.secondaryTextColor = Colors.grey,
   });
 }
