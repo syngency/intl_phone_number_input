@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:intl_phone_number_input/src/models/country_model.dart';
 import 'package:intl_phone_number_input/src/utils/test/test_helper.dart';
 import 'package:intl_phone_number_input/src/utils/util.dart';
@@ -13,16 +14,19 @@ class CountrySearchListWidget extends StatefulWidget {
   final bool showFlags;
   final bool useEmoji;
 
+  // syngency
+  final SelectorConfig selectorConfig;
+
   CountrySearchListWidget(this.countries, this.locale,
       {this.searchBoxDecoration,
       this.scrollController,
       this.showFlags,
       this.useEmoji,
-      this.autoFocus = false});
+      this.autoFocus = false,
+      this.selectorConfig});
 
   @override
-  _CountrySearchListWidgetState createState() =>
-      _CountrySearchListWidgetState();
+  _CountrySearchListWidgetState createState() => _CountrySearchListWidgetState();
 }
 
 class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
@@ -55,13 +59,9 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
       return widget.countries
           .where(
             (Country country) =>
-                country.alpha3Code
-                    .toLowerCase()
-                    .startsWith(value.toLowerCase()) ||
+            country.alpha3Code.toLowerCase().startsWith(value.toLowerCase()) ||
                 country.name.toLowerCase().contains(value.toLowerCase()) ||
-                getCountryName(country)
-                    .toLowerCase()
-                    .contains(value.toLowerCase()) ||
+                getCountryName(country).toLowerCase().contains(value.toLowerCase()) ||
                 country.dialCode.contains(value.toLowerCase()),
           )
           .toList();
@@ -94,8 +94,7 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
             decoration: getSearchBoxDecoration(),
             controller: _searchController,
             autofocus: widget.autoFocus,
-            onChanged: (value) =>
-                setState(() => filteredCountries = filterCountries()),
+            onChanged: (value) => setState(() => filteredCountries = filterCountries()),
           ),
         ),
         Expanded(
@@ -108,18 +107,23 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
               if (country == null) return null;
               return ListTile(
                 key: Key(TestHelper.countryItemKeyValue(country.alpha2Code)),
-                leading: widget.showFlags
-                    ? _Flag(country: country, useEmoji: widget.useEmoji)
-                    : null,
+                leading:
+                    widget.showFlags ? _Flag(country: country, useEmoji: widget.useEmoji) : null,
                 title: Align(
                     alignment: AlignmentDirectional.centerStart,
-                    child: Text('${getCountryName(country)}',
-                        textAlign: TextAlign.start)),
+                    child: Text(
+                      '${getCountryName(country)}',
+                      textAlign: TextAlign.start,
+                      style: widget.selectorConfig?.textStyle, // syngency
+                    )),
                 subtitle: Align(
                     alignment: AlignmentDirectional.centerStart,
-                    child: Text('${country?.dialCode ?? ''}',
-                        textDirection: TextDirection.ltr,
-                        textAlign: TextAlign.start)),
+                    child: Text(
+                      '${country?.dialCode ?? ''}',
+                      textDirection: TextDirection.ltr,
+                      textAlign: TextAlign.start,
+                      style: widget.selectorConfig?.secondaryTextStyle, //syngency
+                    )),
                 onTap: () => Navigator.of(context).pop(country),
               );
             },
