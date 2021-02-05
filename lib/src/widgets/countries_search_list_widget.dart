@@ -59,7 +59,7 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
       return widget.countries
           .where(
             (Country country) =>
-            country.alpha3Code.toLowerCase().startsWith(value.toLowerCase()) ||
+                country.alpha3Code.toLowerCase().startsWith(value.toLowerCase()) ||
                 country.name.toLowerCase().contains(value.toLowerCase()) ||
                 getCountryName(country).toLowerCase().contains(value.toLowerCase()) ||
                 country.dialCode.contains(value.toLowerCase()),
