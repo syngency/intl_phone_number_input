@@ -317,7 +317,6 @@ class _InputWidgetState extends State<InternationalPhoneNumberInput> {
     setState(() {
       this.country = country;
     });
-    widget.focusNode?.requestFocus();
     phoneNumberControllerListener();
   }
 
