@@ -26,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final TextEditingController controller = TextEditingController();
-  String initialCountry = 'NG';
+  String? initialCountry = 'NG';
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               onPressed: () {
-                formKey.currentState.validate();
+                formKey.currentState!.validate();
               },
               child: Text('Validate'),
             ),

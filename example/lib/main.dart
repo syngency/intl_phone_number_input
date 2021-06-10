@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               onPressed: () {
-                formKey.currentState.validate();
+                formKey.currentState!.validate();
               },
               child: Text('Validate'),
             ),
@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             RaisedButton(
               onPressed: () {
-                formKey.currentState.save();
+                formKey.currentState!.save();
               },
               child: Text('Save'),
             ),

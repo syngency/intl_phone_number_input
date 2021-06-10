@@ -9,29 +9,29 @@ import 'package:intl_phone_number_input/src/widgets/item.dart';
 /// [SelectorButton]
 class SelectorButton extends StatelessWidget {
   final List<Country> countries;
-  final Country country;
+  final Country? country;
   final SelectorConfig selectorConfig;
-  final TextStyle selectorTextStyle;
-  final InputDecoration searchBoxDecoration;
+  final TextStyle? selectorTextStyle;
+  final InputDecoration? searchBoxDecoration;
   final bool autoFocusSearchField;
-  final String locale;
+  final String? locale;
   final bool isEnabled;
   final bool isScrollControlled;
 
-  final ValueChanged<Country> onCountryChanged;
+  final ValueChanged<Country?> onCountryChanged;
 
   const SelectorButton({
-    Key key,
-    @required this.countries,
-    @required this.country,
-    @required this.selectorConfig,
-    @required this.selectorTextStyle,
-    @required this.searchBoxDecoration,
-    @required this.autoFocusSearchField,
-    @required this.locale,
-    @required this.onCountryChanged,
-    @required this.isEnabled,
-    @required this.isScrollControlled,
+    Key? key,
+    required this.countries,
+    required this.country,
+    required this.selectorConfig,
+    required this.selectorTextStyle,
+    required this.searchBoxDecoration,
+    required this.autoFocusSearchField,
+    required this.locale,
+    required this.onCountryChanged,
+    required this.isEnabled,
+    required this.isScrollControlled,
   }) : super(key: key);
 
   @override
@@ -64,7 +64,7 @@ class SelectorButton extends StatelessWidget {
             minWidth: 0,
             onPressed: countries.isNotEmpty && countries.length > 1 && isEnabled
                 ? () async {
-                    Country selected;
+                    Country? selected;
                     if (selectorConfig.selectorType == PhoneInputSelectorType.BOTTOM_SHEET) {
                       selected = await showCountrySelectorBottomSheet(context, countries);
                     } else {
@@ -106,7 +106,7 @@ class SelectorButton extends StatelessWidget {
   }
 
   /// shows a Dialog with list [countries] if the [PhoneInputSelectorType.DIALOG] is selected
-  Future<Country> showCountrySelectorDialog(BuildContext context, List<Country> countries) {
+  Future<Country?> showCountrySelectorDialog(BuildContext context, List<Country> countries) {
     return showDialog(
       context: context,
       barrierDismissible: true,
@@ -127,7 +127,7 @@ class SelectorButton extends StatelessWidget {
   }
 
   /// shows a Dialog with list [countries] if the [PhoneInputSelectorType.BOTTOM_SHEET] is selected
-  Future<Country> showCountrySelectorBottomSheet(BuildContext context, List<Country> countries) {
+  Future<Country?> showCountrySelectorBottomSheet(BuildContext context, List<Country> countries) {
     return showModalBottomSheet(
       context: context,
       clipBehavior: Clip.hardEdge,
@@ -135,7 +135,7 @@ class SelectorButton extends StatelessWidget {
       backgroundColor: Colors.transparent,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(selectorConfig.borderRadius),
+              topLeft: Radius.circular(selectorConfig.borderRadius!),
               topRight: Radius.circular(12))),
       builder: (BuildContext context) {
         return AnimatedPadding(

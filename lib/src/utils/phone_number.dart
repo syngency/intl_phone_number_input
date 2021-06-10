@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:equatable/equatable.dart';
 import 'package:intl_phone_number_input/src/models/country_list.dart';
 import 'package:intl_phone_number_input/src/utils/phone_number/phone_number_util.dart';
@@ -23,13 +24,13 @@ enum PhoneNumberType {
 /// [PhoneNumber] contains detailed information about a phone number
 class PhoneNumber extends Equatable {
   /// Either formatted or unformatted String of the phone number
-  final String phoneNumber;
+  final String? phoneNumber;
 
   /// The Country [dialCode] of the phone number
-  final String dialCode;
+  final String? dialCode;
 
   /// Country [isoCode] of the phone number
-  final String isoCode;
+  final String? isoCode;
 
   /// [_hash] is used to compare instances of [PhoneNumber] object.
   final int _hash;
@@ -39,7 +40,7 @@ class PhoneNumber extends Equatable {
   int get hash => _hash;
 
   @override
-  List<Object> get props => [phoneNumber, dialCode];
+  List<Object?> get props => [phoneNumber, dialCode];
 
   PhoneNumber({
     this.phoneNumber,
@@ -49,21 +50,19 @@ class PhoneNumber extends Equatable {
 
   @override
   String toString() {
-    return phoneNumber;
+    return phoneNumber!;
   }
 
   /// Returns [PhoneNumber] which contains region information about
   /// the [phoneNumber] and [isoCode] passed.
   static Future<PhoneNumber> getRegionInfoFromPhoneNumber(
-    String phoneNumber, [
+    String? phoneNumber, [
     String isoCode = '',
   ]) async {
     assert(isoCode != null);
-    RegionInfo regionInfo = await PhoneNumberUtil.getRegionInfo(
-        phoneNumber: phoneNumber ?? '', isoCode: isoCode);
+    RegionInfo regionInfo = await PhoneNumberUtil.getRegionInfo(phoneNumber: phoneNumber ?? '', isoCode: isoCode);
 
-    String internationalPhoneNumber =
-        await PhoneNumberUtil.normalizePhoneNumber(
+    String? internationalPhoneNumber = await PhoneNumberUtil.normalizePhoneNumber(
       phoneNumber: phoneNumber,
       isoCode: regionInfo.isoCode ?? isoCode,
     );
@@ -81,13 +80,13 @@ class PhoneNumber extends Equatable {
     if (phoneNumber.isoCode != null) {
       PhoneNumber number = await getRegionInfoFromPhoneNumber(
         phoneNumber.phoneNumber,
-        phoneNumber.isoCode,
+        phoneNumber.isoCode!,
       );
-      String formattedNumber = await PhoneNumberUtil.formatAsYouType(
+      String? formattedNumber = await PhoneNumberUtil.formatAsYouType(
         phoneNumber: number.phoneNumber,
         isoCode: number.isoCode,
       );
-      return formattedNumber.replaceAll(
+      return formattedNumber!.replaceAll(
         RegExp('^([\\+]?${number.dialCode}[\\s]?)'),
         '',
       );
@@ -99,17 +98,15 @@ class PhoneNumber extends Equatable {
 
   /// Returns a String of [phoneNumber] without [dialCode]
   String parseNumber() {
-    return this.phoneNumber.replaceAll("${this.dialCode}", '');
+    return this.phoneNumber!.replaceAll("${this.dialCode}", '');
   }
 
   /// For predefined phone number returns Country's [isoCode] from the dial code,
   /// Returns null if not found.
-  static String getISO2CodeByPrefix(String prefix) {
+  static String? getISO2CodeByPrefix(String prefix) {
     if (prefix != null && prefix.isNotEmpty) {
       prefix = prefix.startsWith('+') ? prefix : '+$prefix';
-      var country = Countries.countryList.firstWhere(
-          (country) => country['dial_code'] == prefix,
-          orElse: () => null);
+      var country = Countries.countryList.firstWhereOrNull((country) => country['dial_code'] == prefix);
       if (country != null && country['alpha_2_code'] != null) {
         return country['alpha_2_code'];
       }
@@ -119,10 +116,8 @@ class PhoneNumber extends Equatable {
 
   /// Returns [PhoneNumberType] which is the type of phone number
   /// Accepts [phoneNumber] and [isoCode] and r
-  static Future<PhoneNumberType> getPhoneNumberType(
-      String phoneNumber, String isoCode) async {
-    PhoneNumberType type = await PhoneNumberUtil.getNumberType(
-        phoneNumber: phoneNumber, isoCode: isoCode);
+  static Future<PhoneNumberType> getPhoneNumberType(String phoneNumber, String isoCode) async {
+    PhoneNumberType type = await PhoneNumberUtil.getNumberType(phoneNumber: phoneNumber, isoCode: isoCode);
 
     return type;
   }
