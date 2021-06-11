@@ -131,12 +131,11 @@ class SelectorButton extends StatelessWidget {
     return showModalBottomSheet(
       context: context,
       clipBehavior: Clip.hardEdge,
-      isScrollControlled: isScrollControlled ?? true,
+      isScrollControlled: isScrollControlled,
       backgroundColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(selectorConfig.borderRadius!),
-              topRight: Radius.circular(12))),
+          borderRadius:
+              BorderRadius.only(topLeft: Radius.circular(selectorConfig.borderRadius!), topRight: Radius.circular(12))),
       builder: (BuildContext context) {
         return AnimatedPadding(
           padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -152,8 +151,8 @@ class SelectorButton extends StatelessWidget {
                     color: selectorConfig.backgroundColor ?? Theme.of(context).canvasColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(selectorConfig?.borderRadius ?? 12),
-                        topRight: Radius.circular(selectorConfig?.borderRadius ?? 12),
+                        topLeft: Radius.circular(selectorConfig.borderRadius ?? 12),
+                        topRight: Radius.circular(selectorConfig.borderRadius ?? 12),
                       ),
                     ),
                   ),

@@ -90,8 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void getPhoneNumber(String phoneNumber) async {
-    PhoneNumber number =
-        await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber, 'US');
+    PhoneNumber number = await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber, 'US');
 
     setState(() {
       this.number = number;
@@ -100,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller.dispose();
     super.dispose();
   }
 }

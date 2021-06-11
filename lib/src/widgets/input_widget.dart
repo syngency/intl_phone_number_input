@@ -157,7 +157,7 @@ class _InputWidgetState extends State<InternationalPhoneNumberInput> {
 
   @override
   void didUpdateWidget(InternationalPhoneNumberInput oldWidget) {
-    if (oldWidget?.initialValue?.hash != widget?.initialValue?.hash) {
+    if (oldWidget.initialValue?.hash != widget.initialValue?.hash) {
       loadCountries();
       initialiseWidget();
     } else {
@@ -187,7 +187,7 @@ class _InputWidgetState extends State<InternationalPhoneNumberInput> {
     if (this.mounted) {
       List<Country> countries = CountryProvider.getCountriesData(countries: widget.countries);
 
-      final CountryComparator? countryComparator = widget.selectorConfig?.countryComparator;
+      final CountryComparator? countryComparator = widget.selectorConfig.countryComparator;
       if (countryComparator != null) {
         countries.sort(countryComparator);
       }
@@ -296,7 +296,7 @@ class _InputWidgetState extends State<InternationalPhoneNumberInput> {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       if (isValid && widget.errorMessage != null) {
         setState(() {
-          this.selectorButtonBottomPadding = widget.selectorButtonOnErrorPadding ?? 24;
+          this.selectorButtonBottomPadding = widget.selectorButtonOnErrorPadding;
         });
       } else {
         setState(() {
@@ -351,8 +351,8 @@ class _InputWidgetView extends WidgetView<InternationalPhoneNumberInput, _InputW
 
   @override
   Widget build(BuildContext context) {
-    final countryCode = state?.country?.alpha2Code ?? '';
-    final dialCode = state?.country?.dialCode ?? '';
+    final countryCode = state.country?.alpha2Code ?? '';
+    final dialCode = state.country?.dialCode ?? '';
 
     return Container(
       child: Row(

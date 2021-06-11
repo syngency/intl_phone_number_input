@@ -41,7 +41,7 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
 
   @override
   void dispose() {
-    _searchController?.dispose();
+    _searchController.dispose();
     super.dispose();
   }
 
@@ -117,7 +117,7 @@ class _CountrySearchListWidgetState extends State<CountrySearchListWidget> {
                 subtitle: Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: Text(
-                      '${country?.dialCode ?? ''}',
+                      '${country.dialCode ?? ''}',
                       textDirection: TextDirection.ltr,
                       textAlign: TextAlign.start,
                       style: widget.selectorConfig?.secondaryTextStyle, //syngency
